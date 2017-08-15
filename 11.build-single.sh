@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SITES="clusters"
-PREFIX="core"
+PREFIX="ncbr"
 
 # ------------------------------------------------------------------------------
 
@@ -13,6 +13,7 @@ fi
 # ------------------------------------
 # required for building
 module add cmake git
+module add intelcdk
 
 # determine number of available CPUs if not specified
 if [ -z "$N" ]; then
@@ -35,9 +36,6 @@ fi
 _PWD=$PWD
 cd src/projects/pmflib/5.0 || exit 1
 ./UpdateGitVersion activate || exit 1
-cd $_PWD
-
-cd src/proprietary/pmemd-pmf/16 || exit 1
 VERS="16.5.`git rev-list --count HEAD`.`git rev-parse --short HEAD`"
 cd $_PWD
 
@@ -50,7 +48,7 @@ echo ""
 # names ------------------------------
 NAME="pmemd-pmf"
 ARCH=`uname -m`
-MODE="para" 
+MODE="single" 
 echo "Build: $NAME:$VERS:$ARCH:$MODE"
 echo ""
 
@@ -74,9 +72,7 @@ cat > $SOFTBLDS/$NAME:$VERS:$ARCH:$MODE.bld << EOF
     </setup>
 </build>
 EOF
-
 if [ $? -ne 0 ]; then exit 1; fi
-
 
 echo ""
 echo "Adding builds ..."

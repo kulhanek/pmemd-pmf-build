@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SITES="clusters"
-PREFIX="core"
+PREFIX="ncbr"
 
 # ------------------------------------------------------------------------------
 
@@ -13,20 +13,21 @@ fi
 # ------------------------------------
 # required for building
 module add cmake git
+module add intelcdk
 
 # setup MPI environment
-module add openmpi:2.0.1-gcc
+module add openmpi:2.x-intel
+
 export FC=mpif90
 
 # determine number of available CPUs if not specified
-# if [ -z "$N" ]; then
-#     N=1
-#     type nproc &> /dev/null
-#     if type nproc &> /dev/null; then
-#         N=`nproc --all`
-#     fi
-# fi
-N=1
+if [ -z "$N" ]; then
+    N=1
+    type nproc &> /dev/null
+    if type nproc &> /dev/null; then
+        N=`nproc --all`
+    fi
+fi
 
 # ------------------------------------------------------------------------------
 # update revision number
@@ -77,9 +78,7 @@ cat > $SOFTBLDS/$NAME:$VERS:$ARCH:$MODE.bld << EOF
     </deps>
 </build>
 EOF
-
 if [ $? -ne 0 ]; then exit 1; fi
-
 
 echo ""
 echo "Adding builds ..."
