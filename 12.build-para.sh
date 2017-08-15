@@ -16,7 +16,7 @@ module add cmake git
 module add intelcdk
 
 # setup MPI environment
-module add openmpi:2.x-intel
+module add openmpi-intel
 
 export FC=mpif90
 
