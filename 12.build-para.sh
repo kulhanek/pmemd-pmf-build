@@ -27,6 +27,9 @@ if [ -z "$N" ]; then
     if type nproc &> /dev/null; then
         N=`nproc --all`
     fi
+    if [ "$N" -gt 4 ]; then
+        N=4
+    fi
 fi
 
 # ------------------------------------------------------------------------------
@@ -64,6 +67,9 @@ if [ $? -ne 0 ]; then exit 1; fi
 # prepare build file -----------------
 SOFTBLDS="$AMS_ROOT/etc/map/builds/$PREFIX"
 VERIDX=`ams-map-manip newverindex $NAME:$VERS:$ARCH:$MODE`
+
+mkdir -p $SOFTBLDS
+if [ $? -ne 0 ]; then exit 1; fi
 
 cat > $SOFTBLDS/$NAME:$VERS:$ARCH:$MODE.bld << EOF
 <?xml version="1.0" encoding="UTF-8"?>
