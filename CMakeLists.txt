@@ -59,6 +59,7 @@ ENDIF(MKL_HOME)
 
 # MPI ======================
 GET_FILENAME_COMPONENT(FCOMP_NAME ${CMAKE_Fortran_COMPILER} NAME_WE)
+    MESSAGE("-- F90 comp:   ${FCOMP_NAME}")
 if(FCOMP_NAME STREQUAL mpif90)
     SET(MPI_ENABLED TRUE)
     SET(MPI_HOME "$ENV{MPI_HOME}")
@@ -107,16 +108,7 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
 # compiler setups --------------------------------------------------------------
 # ==============================================================================
 
-IF(TARGET_ARCHITECTURE STREQUAL i686)
-    # C options
-    SET(CMAKE_C_FLAGS_RELEASE "-O2 -m32")
-    SET(CMAKE_C_FLAGS_DEBUG "-g -m32 -Wall -Werror -pedantic-errors -Wundef -Wno-long-long")
-    # C++ options
-    SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -m32")
-    SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -m32 -g -Wall -Werror -pedantic-errors -Wundef -Wno-long-long")
-    SET(CPU_ARCH 32)
-    SET_PROPERTY(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS FALSE)
-ELSEIF(TARGET_ARCHITECTURE STREQUAL em64t)
+IF(TARGET_ARCHITECTURE STREQUAL em64t)
     # C options
     SET(CMAKE_C_FLAGS_RELEASE "-O2 -m64")
     SET(CMAKE_C_FLAGS_DEBUG "-g -m64 -Wall -Werror -pedantic-errors -Wundef -Wno-long-long")
@@ -124,22 +116,22 @@ ELSEIF(TARGET_ARCHITECTURE STREQUAL em64t)
     SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -m64")
     SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -m64 -g -Wall -Werror -pedantic-errors -Wundef -Wno-long-long")
     SET(CPU_ARCH 64)
-ELSE(TARGET_ARCHITECTURE STREQUAL i686)
+ELSE(TARGET_ARCHITECTURE STREQUAL em64t)
     MESSAGE(FATAL_ERROR "ERROR: Unsupported target architecture: ${TARGET_ARCHITECTURE}")
-ENDIF(TARGET_ARCHITECTURE STREQUAL i686)
+ENDIF(TARGET_ARCHITECTURE STREQUAL em64t)
 
 # get the name of fortran compiler
 get_filename_component(FCOMP_NAME ${CMAKE_Fortran_COMPILER} NAME_WE)
 
 # Fortran options
-SET(CMAKE_Fortran_FLAGS_RELEASE "-O2 ")
+SET(CMAKE_Fortran_FLAGS_RELEASE "-O2")
 SET(CMAKE_Fortran_FLAGS_DEBUG "-O0")
 
 # fix the problem with dynamic libraries and xlf compiler on SP5
 IF(FCOMP_NAME STREQUAL ifort)
     # ifort
     IF(TARGET_ARCHITECTURE STREQUAL em64t)
-        SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ip")
+        SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ip -msse3 -axAVX,CORE-AVX2")
         SET(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -std95 -traceback -check all -warn all")
     ELSE(TARGET_ARCHITECTURE STREQUAL em64t)
         MESSAGE(FATAL_ERROR "ERROR: Unsupported target architecture: ${TARGET_ARCHITECTURE}")
@@ -155,7 +147,7 @@ ELSEIF(FCOMP_NAME STREQUAL gfortran)
 ELSEIF(FCOMP_NAME STREQUAL mpif90)
     # mpif90 ifort
     IF(TARGET_ARCHITECTURE STREQUAL em64t)
-        SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ffree-line-length-none")
+        SET(CMAKE_Fortran_FLAGS_RELEASE "-O3 -ip -msse3 -axAVX,CORE-AVX2")
         SET(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g")
     ELSE(TARGET_ARCHITECTURE STREQUAL em64t)
         MESSAGE(FATAL_ERROR "ERROR: Unsupported target architecture: ${TARGET_ARCHITECTURE}")
@@ -187,7 +179,6 @@ ADD_SUBDIRECTORY(src/projects/pmflib/5.0)
 
 # proprietary ------------------------------------
 ADD_SUBDIRECTORY(src/proprietary/pmemd-pmf/16)
-
 
 # ==============================================================================
 # inter-project dependencies  -------------------------------------------------
