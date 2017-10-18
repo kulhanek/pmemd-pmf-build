@@ -17,4 +17,5 @@ test/
 05.run-tests.sh
 06.gen-runtime-paths.sh
 08.git-status.sh
-
+para.log
+single.log
