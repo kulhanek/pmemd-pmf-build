@@ -18,8 +18,6 @@ module add intelcdk
 # setup MPI environment
 module add openmpi-intel
 
-export FC=mpif90
-
 # determine number of available CPUs if not specified
 if [ -z "$N" ]; then
     N=1
