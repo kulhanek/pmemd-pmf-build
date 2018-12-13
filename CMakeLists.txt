@@ -91,6 +91,7 @@ ENDIF(NOT MKL_FOUND)
 ADD_SUBDIRECTORY(src/thirdparty/ranlux/1.0)
 ADD_SUBDIRECTORY(src/thirdparty/csparse/2.2.1)
 ADD_SUBDIRECTORY(src/thirdparty/netcdfcore/4.0.1)
+ADD_SUBDIRECTORY(src/thirdparty/nlopt/2.4.2)
 
 # projects ---------------------------------------
 ADD_SUBDIRECTORY(src/projects/hipoly/1.0)
@@ -111,7 +112,7 @@ ADD_DEPENDENCIES(cscimafic_shared hipoly_shared)
 ADD_DEPENDENCIES(cprmfile_shared hipoly_shared)
 ADD_DEPENDENCIES(netlib_shared hipoly_shared cprmfile_shared)
 ADD_DEPENDENCIES(fpmf_shared fprmfile_shared fscimafic_shared franlux_shared)
-ADD_DEPENDENCIES(cpmf_shared hipoly_shared cscimafic_shared netlib_shared)
+ADD_DEPENDENCIES(cpmf_shared hipoly_shared cscimafic_shared netlib_shared nlopt_shared)
 ADD_DEPENDENCIES(pmemd_new_drv_shared fpmf_shared)
 
 ADD_DEPENDENCIES(pmemd_lib fnetcdf_shared fpmf_shared pmemd_new_drv_shared)
