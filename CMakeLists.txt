@@ -130,4 +130,5 @@ IF(NOT MKL_FOUND)
     ADD_DEPENDENCIES(fpmf_shared fblasd_shared flapackd_shared)
 ENDIF(NOT MKL_FOUND)
 
+DD_DEPENDENCIES(abf-optgprhyprms flbfgs_shared)
 
