@@ -9,6 +9,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
 # project setup ----------------------------------------------------------------
 # ==============================================================================
 
+PROJECT(PMEMDPMFLib)
+
 # what languages we use ---------------------------
 ENABLE_LANGUAGE(C)
 ENABLE_LANGUAGE(CXX)
