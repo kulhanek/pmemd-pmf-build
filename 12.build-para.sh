@@ -18,7 +18,7 @@ module add intelcdk
 # setup MPI environment
 module add openmpi-intel
 
-# use parallel MKL
+# use single MKL, RT##644123
 export MKL_MODE=single
 
 # determine number of available CPUs if not specified
