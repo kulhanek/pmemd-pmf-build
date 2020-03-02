@@ -19,7 +19,7 @@ module add intelcdk
 module add openmpi-intel
 
 # use parallel MKL
-export MKL_MODE=parallel
+export MKL_MODE=single
 
 # determine number of available CPUs if not specified
 if [ -z "$N" ]; then
