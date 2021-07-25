@@ -9,7 +9,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10 FATAL_ERROR)
 # project setup ----------------------------------------------------------------
 # ==============================================================================
 
-PROJECT(PMEMD-PMF)
+PROJECT(PMEMDPMFLib)
 
 # what languages we use ---------------------------
 ENABLE_LANGUAGE(C)
