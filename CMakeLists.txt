@@ -2,12 +2,14 @@
 # PMEMD-PMF Composite CMake File
 # ==============================================================================
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10 FATAL_ERROR)
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 # ==============================================================================
 # project setup ----------------------------------------------------------------
 # ==============================================================================
+
+PROJECT(PMEMD-PMF)
 
 # what languages we use ---------------------------
 ENABLE_LANGUAGE(C)
@@ -99,7 +101,7 @@ ADD_SUBDIRECTORY(src/projects/hipoly/1.0)
 ADD_SUBDIRECTORY(src/projects/scimafic/1.0)
 ADD_SUBDIRECTORY(src/projects/prmfile/1.0)
 ADD_SUBDIRECTORY(src/projects/netlib/1.0)
-ADD_SUBDIRECTORY(src/projects/pmflib/5.0)
+ADD_SUBDIRECTORY(src/projects/pmflib/6.0)
 
 # proprietary ------------------------------------
 ADD_SUBDIRECTORY(src/proprietary/pmemd-pmf/16)
@@ -131,5 +133,5 @@ IF(NOT MKL_FOUND)
     ADD_DEPENDENCIES(fpmf_shared fblasd_shared flapackd_shared)
 ENDIF(NOT MKL_FOUND)
 
-ADD_DEPENDENCIES(abf-optgprhyprms flbfgs_shared)
+ADD_DEPENDENCIES(gpr-opthyprms flbfgs_shared)
 
